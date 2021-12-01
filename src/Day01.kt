@@ -2,7 +2,7 @@ fun main() {
 
     val day = 1;
 
-    fun general(input: List<String>, window: Int): Int {
+    fun solve(input: List<String>, window: Int): Int {
         val depths = input.stream().mapToInt(Integer::parseInt).toArray()
         var count = 0
         for(i in 0..depths.size-(window + 1)) {
@@ -15,11 +15,11 @@ fun main() {
     }
 
     fun part1(input: List<String>): Int {
-        return general(input, 1)
+        return solve(input, 1)
     }
 
     fun part2(input: List<String>): Int {
-        return general(input, 3)
+        return solve(input, 3)
     }
 
     fun treatPart(part: Int, answer: Int) {
