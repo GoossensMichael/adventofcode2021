@@ -3,31 +3,30 @@ fun main() {
     val day = 1;
 
     fun part1(input: List<String>): Int {
-        val instructions = input.get(0).split(", ").toList()
-        var direction = intArrayOf(0, 1)
-        var position = intArrayOf(0, 0)
-
-        for(instruction in instructions) {
-            val rotation = instruction.get(0)
-            val steps = Character.getNumericValue(instruction.get(1))
-
-            if (rotation == 'L') {
-                val newDirection = intArrayOf(-direction[1], direction[0])
-                direction = newDirection
-            } else if (rotation == 'R') {
-                val newDirection = intArrayOf(direction[1], -direction[0])
-                direction = newDirection
+        var previous : Int? = null
+        var count = 0
+        for(depth in input.stream().mapToInt(Integer::parseInt)) {
+            if (previous != null) {
+                if (previous < depth) {
+                    count++
+                }
             }
-
-            position[0] = position[0] + (steps * direction[0])
-            position[1] = position[1] + (steps * direction[1])
+            previous = depth
         }
 
-        return Math.abs(position[0]) + Math.abs(position[1])
+        return count
     }
 
     fun part2(input: List<String>): Int {
-        return input.size
+        val depths = input.stream().mapToInt(Integer::parseInt).toArray()
+        var count = 0
+        for(i in 0..depths.size-4) {
+            if (depths[i] + depths[i+1] + depths[i+2] < depths[i+1] + depths[i+2] + depths[i+3]) {
+                count++
+            }
+        }
+
+        return count
     }
 
     fun treatPart(part: Int, answer: Int) {
@@ -39,10 +38,11 @@ fun main() {
 
     // test if implementation meets criteria from the description, like:
     val testInput = readInput(String.format("Day%02d_test", day))
-    check(part1(testInput) == 12)
+    check(part1(testInput) == 7)
 
     val input = readInput(String.format("Day%02d", day))
-
     treatPart(1, part1(input))
+
+    check(part2(testInput) == 5)
     treatPart(2, part2(input))
 }
