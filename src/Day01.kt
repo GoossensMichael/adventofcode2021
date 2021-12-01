@@ -2,31 +2,24 @@ fun main() {
 
     val day = 1;
 
-    fun part1(input: List<String>): Int {
-        var previous : Int? = null
-        var count = 0
-        for(depth in input.stream().mapToInt(Integer::parseInt)) {
-            if (previous != null) {
-                if (previous < depth) {
-                    count++
-                }
-            }
-            previous = depth
-        }
-
-        return count
-    }
-
-    fun part2(input: List<String>): Int {
+    fun general(input: List<String>, window: Int): Int {
         val depths = input.stream().mapToInt(Integer::parseInt).toArray()
         var count = 0
-        for(i in 0..depths.size-4) {
-            if (depths[i] + depths[i+1] + depths[i+2] < depths[i+1] + depths[i+2] + depths[i+3]) {
+        for(i in 0..depths.size-(window + 1)) {
+            if (depths[i] < depths[i+window]) {
                 count++
             }
         }
 
         return count
+    }
+
+    fun part1(input: List<String>): Int {
+        return general(input, 1)
+    }
+
+    fun part2(input: List<String>): Int {
+        return general(input, 3)
     }
 
     fun treatPart(part: Int, answer: Int) {
