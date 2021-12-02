@@ -29,13 +29,19 @@ fun main() {
         }
     }
 
-    // test if implementation meets criteria from the description, like:
+    // test if implementation meets criteria from the description for part 1, like:
     val testInput = readInput(String.format("Day%02d_test", day))
     check(part1(testInput) == 7)
 
+    // test was ok retrieve the real data
     val input = readInput(String.format("Day%02d", day))
+
+    // get the answer with the real data for part 1
     treatPart(1, part1(input))
 
+    // test if implementation meets criteria from the description for part 2, like:
     check(part2(testInput) == 5)
+
+    // get the answer with the real data for part 2
     treatPart(2, part2(input))
 }
