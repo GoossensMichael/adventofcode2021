@@ -2,16 +2,12 @@ fun main() {
 
     val day = 0;
 
-    fun solve(input: List<String>, window: Int): Int {
+    fun part1(input: List<String>): Int {
         return 0
     }
 
-    fun part1(input: List<String>): Int {
-        return solve(input, 1)
-    }
-
     fun part2(input: List<String>): Int {
-        return solve(input, 3)
+        return 0
     }
 
     fun treatPart(part: Int, answer: Int) {
