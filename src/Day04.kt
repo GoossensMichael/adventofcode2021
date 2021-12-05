@@ -1,9 +1,7 @@
-import kotlin.streams.toList
-
 class Board (val numbers: Array<IntArray>) {
 
-    val rowHits = Array(5) { mutableListOf<Int>() }
-    val colHits = Array(5) { mutableListOf<Int>() }
+    private val rowHits = Array(5) { mutableListOf<Int>() }
+    private val colHits = Array(5) { mutableListOf<Int>() }
 
     fun verifyNumber(number: Int): Int? {
         for (i in numbers.indices) {
@@ -31,14 +29,14 @@ class Board (val numbers: Array<IntArray>) {
 
 fun main() {
 
-    val day = 4;
+    val day = 4
 
     fun createBoards(input: List<String>): MutableList<Board> {
         val boards = mutableListOf<Board>()
         for (boardNumber in 0 until (input.size + 1) / 6) {
             val board = Board(Array(5) { IntArray(5) })
             for (row in 0 until 5) {
-                val inputRow = input.get(boardNumber * 6 + row)
+                val inputRow = input[boardNumber * 6 + row]
                 board.numbers[row] = inputRow.split("[ ]+".toRegex()).stream()
                     .filter { it != "" }
                     .mapToInt { Integer.parseInt(it) }
@@ -51,7 +49,7 @@ fun main() {
     }
 
     fun part1(input: List<String>): Int {
-        val numbers = input.get(0).split(',').stream().mapToInt({ Integer.parseInt(it) }).toArray()
+        val numbers = input[0].split(',').stream().mapToInt { Integer.parseInt(it) }.toArray()
         val boards = createBoards(input.subList(2, input.size))
 
         for (number in numbers) {
@@ -67,7 +65,7 @@ fun main() {
     }
 
     fun part2(input: List<String>): Int {
-        val numbers = input.get(0).split(',').stream().mapToInt({ Integer.parseInt(it) }).toArray()
+        val numbers = input[0].split(',').stream().mapToInt { Integer.parseInt(it) }.toArray()
         val boards = createBoards(input.subList(2, input.size))
 
         for (number in numbers) {
@@ -86,13 +84,6 @@ fun main() {
         return 0
     }
 
-    fun treatPart(part: Int, answer: Int) {
-        print("Submit part $part result $answer? (y|n): ")
-        if (readLine() == "y") {
-            sendAnswer(day, part, answer)
-        }
-    }
-
     // test if implementation meets criteria from the description for part 1, like:
     val testInput = readInput(String.format("Day%02d_test", day))
     check(part1(testInput) == 4512)
@@ -101,11 +92,11 @@ fun main() {
     val input = readInput(String.format("Day%02d", day))
 
     // get the answer with the real data for part 1
-    treatPart(1, part1(input))
+    treatPart(1, part1(input), day)
 
     // test if implementation meets criteria from the description for part 2, like:
     check(part2(testInput) == 1924)
 
     // get the answer with the real data for part 2
-    treatPart(2, part2(input))
+    treatPart(2, part2(input), day)
 }

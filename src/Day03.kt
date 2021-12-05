@@ -2,16 +2,16 @@ import java.util.stream.Collectors
 
 fun main() {
 
-    val day = 3;
+    val day = 3
 
     fun part1(input: List<String>): Int {
 
         var gammaBits = ""
         var epsilonBits = ""
 
-        for (i in 0 until input.get(0).length) {
+        for (i in 0 until input[0].length) {
             val bitValueCount = input.stream()
-                .map({ it.get(i) })
+                .map { it[i] }
                 .collect(Collectors.groupingBy({ it }, Collectors.counting()))
 
             val oneBits = bitValueCount.getOrDefault('1', 0)
@@ -29,14 +29,14 @@ fun main() {
 
     tailrec fun solve(input: List<String>, position: Int, type: String): String {
         if (input.size < 2) {
-            return input.get(0)
+            return input[0]
         }
 
-        val high = mutableListOf<String>();
-        val low = mutableListOf<String>();
+        val high = mutableListOf<String>()
+        val low = mutableListOf<String>()
 
         for(i in input) {
-            if (i.get(position) == '1') {
+            if (i[position] == '1') {
                 high.add(i)
             } else {
                 low.add(i)
@@ -57,13 +57,6 @@ fun main() {
         return Integer.parseInt(oxygen, 2) * Integer.parseInt(co2, 2)
     }
 
-    fun treatPart(part: Int, answer: Int) {
-        print("Submit part $part result $answer? (y|n): ")
-        if (readLine() == "y") {
-            sendAnswer(day, part, answer)
-        }
-    }
-
     // test if implementation meets criteria from the description for part 1, like:
     val testInput = readInput(String.format("Day%02d_test", day))
     check(part1(testInput) == 198)
@@ -72,11 +65,11 @@ fun main() {
     val input = readInput(String.format("Day%02d", day))
 
     // get the answer with the real data for part 1
-    treatPart(1, part1(input))
+    treatPart(1, part1(input), day)
 
     // test if implementation meets criteria from the description for part 2, like:
     check(part2(testInput) == 230)
 
     // get the answer with the real data for part 2
-    treatPart(2, part2(input))
+    treatPart(2, part2(input), day)
 }

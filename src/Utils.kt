@@ -25,6 +25,13 @@ fun send(request: HttpRequest): HttpResponse<String> {
         .send(request, HttpResponse.BodyHandlers.ofString())
 }
 
+fun treatPart(part: Int, answer: Int, day: Int) {
+    print("Submit part $part result $answer? (y|n): ")
+    if (readLine() == "y") {
+        sendAnswer(day, part, answer)
+    }
+}
+
 fun getInput(day: Int) {
     val inputUrl = "https://adventofcode.com/$YEAR/day/$day/input"
 

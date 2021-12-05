@@ -39,13 +39,11 @@ fun main() {
                 val rangeY = prepareRange(from, to, 1)
                 val range = rangeX.zip(rangeY)
 
-                println("${from[0]},${from[1]} to ${to[0]},${to[1]}")
                 for (position in range) {
                     println("${position.first},${position.second}")
                     val key = "${position.first}_${position.second}"
                     oceanFloor[key] = oceanFloor.getOrDefault(key, 0) + 1
                 }
-                println()
             }
         }
 
@@ -64,13 +62,6 @@ fun main() {
         return oceanFloor.values.filter { it > 1 }.count()
     }
 
-    fun treatPart(part: Int, answer: Int) {
-        print("Submit part $part result $answer? (y|n): ")
-        if (readLine() == "y") {
-            sendAnswer(day, part, answer)
-        }
-    }
-
     // test if implementation meets criteria from the description for part 1, like:
     val testInput = readInput(String.format("Day%02d_test", day))
     check(part1(testInput) == 5)
@@ -79,11 +70,11 @@ fun main() {
     val input = readInput(String.format("Day%02d", day))
 
     // get the answer with the real data for part 1
-    treatPart(1, part1(input))
+    treatPart(1, part1(input), day)
 
     // test if implementation meets criteria from the description for part 2, like:
     check(part2(testInput) == 12)
 
     // get the answer with the real data for part 2
-    treatPart(2, part2(input))
+    treatPart(2, part2(input), day)
 }
