@@ -1,6 +1,6 @@
 fun main() {
 
-    val day = 0;
+    val day = 0
 
     fun part1(input: List<String>): Int {
         return 0
