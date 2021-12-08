@@ -64,8 +64,6 @@ fun main() {
             .map { numbers[it] }
             .collect(Collectors.joining())
 
-
-        println(result)
         return Integer.parseInt(result)
     }
 
@@ -76,9 +74,44 @@ fun main() {
                 it[0].split(' ').map { it.toCharArray().sorted().joinToString("") }.groupBy { it.length },
                 it[1].split(' ').map { it.toCharArray().sorted().joinToString("") })
             }
-            .peek { println(it.first) }
             .mapToInt { solve2(it) }
             .sum()
+    }
+
+    fun encode(wiring: String, segmentCount: Map<Char, Int>): String {
+        return wiring.toCharArray()
+            .map { c -> segmentCount[c] }
+            .joinToString("")
+            .toCharArray()
+            .sorted()
+            .joinToString("")
+    }
+
+    fun part2_2(input: List<String>): Int {
+        val referenceSolution = "abcefg cf acdeg acdfg bcdf abdfg abdefg acf abcdefg abcdfg"
+        val segmentCount = referenceSolution.replace(" ", "").toList().groupingBy { it }.eachCount()
+
+        val digitByCode = mutableMapOf<String, Int>()
+        for ((index, wiring) in referenceSolution.split(' ').withIndex()) {
+            digitByCode[encode(wiring, segmentCount)] = index
+        }
+
+        return input.stream()
+            .mapToInt {
+                val split = it.split(" | ")
+                val wiring = split[0]
+                val output = split[1]
+
+                val inputSegmentCount = wiring.replace(" ", "").toList().groupingBy { it }.eachCount()
+
+                var result = ""
+                for (digit in output.split(' ')) {
+                    val code = encode(digit, inputSegmentCount)
+                    result += digitByCode[code]
+                }
+
+                Integer.parseInt(result)
+            }.sum()
     }
 
     fun treatPart(part: Int, answer: Int) {
@@ -99,7 +132,7 @@ fun main() {
     treatPart(1, part1(input))
 
     // test if implementation meets criteria from the description for part 2, like:
-    check(part2(testInput) == 61229)
+    check(part2_2(testInput) == 61229)
 
     // get the answer with the real data for part 2
     treatPart(2, part2(input))
