@@ -63,47 +63,46 @@ fun main() {
     }
 
     fun part2(input: List<String>): Int {
+        val basinAccumulator: (Basin, Basin) -> Unit = { a, b -> a.coordinates.addAll(b.coordinates) }
+
         val heights = toHeightArray(input)
 
         val basins = mutableListOf<Basin>()
         for (i in heights.indices) {
-            for (j in 0 until heights[0].size) {
+            for (j in heights[0].indices) {
                 if (heights[i][j] != 9) {
                     val coordinate = Pair(i, j)
                     val basinsForCoordinate = basins.stream()
                         .filter { it.isPartOf(coordinate, heights) }
                         .collect(Collectors.toList())
 
-                    val basin =
-                        if (basinsForCoordinate.size > 1) {
+                    val basin = when {
+                        basinsForCoordinate.size > 1 -> {
                             // merge basins
-                            val mergedBasin = basinsForCoordinate.stream()
-                                .collect(
-                                    { Basin() },
-                                    { a, b -> a.coordinates.addAll(b.coordinates) },
-                                    { a, b -> a.coordinates.addAll(b.coordinates) })
+                            val mergedBasin =
+                                basinsForCoordinate.stream().collect({ Basin() }, basinAccumulator, basinAccumulator)
                             basins.removeAll { basinsForCoordinate.contains(it) }
                             basins.add(mergedBasin)
                             mergedBasin
-                        } else if (basinsForCoordinate.size == 1) {
-                            // only one basin fits
-                            basinsForCoordinate[0]
-                        } else {
+                        }
+                        basinsForCoordinate.size == 1 -> basinsForCoordinate[0]
+                        else -> {
                             // no basin found yet
                             val newBasin = Basin()
                             basins.add(newBasin)
                             newBasin
                         }
+                    }
                     basin.coordinates.add(coordinate)
                 }
             }
         }
 
         return basins.stream()
-            .sorted { first, second -> second.coordinates.size - first.coordinates.size }
             .asSequence()
-            .take(3)
             .map { it.coordinates.size }
+            .sortedDescending()
+            .take(3)
             .reduce{ a, b -> a * b }
     }
 
