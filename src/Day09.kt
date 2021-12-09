@@ -1,5 +1,6 @@
 import java.util.stream.Collectors
 import kotlin.math.abs
+import kotlin.streams.asSequence
 
 fun main() {
 
@@ -98,14 +99,12 @@ fun main() {
             }
         }
 
-        val biggestBassins = basins.stream()
+        return basins.stream()
             .sorted { first, second -> second.coordinates.size - first.coordinates.size }
-            .collect(Collectors.toList())
-            .subList(0, 3)
-
-        return biggestBassins.stream()
-            .mapToInt { it.coordinates.size }
-            .reduce(1) { a, b -> a * b }
+            .asSequence()
+            .take(3)
+            .map { it.coordinates.size }
+            .reduce{ a, b -> a * b }
     }
 
     fun treatPart(part: Int, answer: Int) {
