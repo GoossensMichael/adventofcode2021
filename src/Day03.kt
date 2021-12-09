@@ -2,74 +2,65 @@ import java.util.stream.Collectors
 
 fun main() {
 
-    val day = 3
+    object : AoC(day = 3) {
+        override fun part1(input: List<String>): Number {
+            var gammaBits = ""
+            var epsilonBits = ""
 
-    fun part1(input: List<String>): Number {
+            for (i in 0 until input[0].length) {
+                val bitValueCount = input.stream()
+                    .map { it[i] }
+                    .collect(Collectors.groupingBy({ it }, Collectors.counting()))
 
-        var gammaBits = ""
-        var epsilonBits = ""
+                val oneBits = bitValueCount.getOrDefault('1', 0)
+                val zeroBits = bitValueCount.getOrDefault('0', 0)
 
-        for (i in 0 until input[0].length) {
-            val bitValueCount = input.stream()
-                .map { it[i] }
-                .collect(Collectors.groupingBy({ it }, Collectors.counting()))
+                val gamma = if (oneBits > zeroBits) '1' else '0'
+                val epsilon = if (oneBits < zeroBits) '1' else '0'
 
-            val oneBits = bitValueCount.getOrDefault('1', 0)
-            val zeroBits = bitValueCount.getOrDefault('0', 0)
-
-            val gamma = if (oneBits > zeroBits) '1' else '0'
-            val epsilon = if (oneBits < zeroBits) '1' else '0'
-
-            gammaBits += gamma
-            epsilonBits += epsilon
-        }
-
-        return Integer.parseInt(gammaBits, 2) * Integer.parseInt(epsilonBits, 2)
-    }
-
-    tailrec fun solve(input: List<String>, position: Int, type: String): String {
-        if (input.size < 2) {
-            return input[0]
-        }
-
-        val high = mutableListOf<String>()
-        val low = mutableListOf<String>()
-
-        for(i in input) {
-            if (i[position] == '1') {
-                high.add(i)
-            } else {
-                low.add(i)
+                gammaBits += gamma
+                epsilonBits += epsilon
             }
+
+            return Integer.parseInt(gammaBits, 2) * Integer.parseInt(epsilonBits, 2)
         }
 
-        val check = if (type == "mostCommon") high.size >= low.size else high.size < low.size
+        override fun check1ExpectedResult(): Number {
+            return 198
+        }
 
-        return if (check) solve(high, position + 1, type) else solve(low, position + 1, type)
-    }
+        private tailrec fun solve(input: List<String>, position: Int, type: String): String {
+            if (input.size < 2) {
+                return input[0]
+            }
 
-    fun part2(input: List<String>): Number {
-        val oxygen = solve(input, 0, "mostCommon")
-        val co2 = solve(input, 0, "leastCommon")
+            val high = mutableListOf<String>()
+            val low = mutableListOf<String>()
 
-        println("oxy $oxygen co2 $co2")
-        println("oxy ${Integer.parseInt(oxygen, 2)} co2 ${Integer.parseInt(co2, 2)}")
-        return Integer.parseInt(oxygen, 2) * Integer.parseInt(co2, 2)
-    }
+            for(i in input) {
+                if (i[position] == '1') {
+                    high.add(i)
+                } else {
+                    low.add(i)
+                }
+            }
 
-    // test if implementation meets criteria from the description for part 1, like:
-    val testInput = readInput(String.format("Day%02d_test", day))
-    check(part1(testInput) == 198)
+            val check = if (type == "mostCommon") high.size >= low.size else high.size < low.size
 
-    // test was ok retrieve the real data
-    val input = readInput(String.format("Day%02d", day))
+            return if (check) solve(high, position + 1, type) else solve(low, position + 1, type)
+        }
 
-    // get the answer with the real data for part 1
-    treatPart(1, part1(input), day)
+        override fun part2(input: List<String>): Number {
+            val oxygen = solve(input, 0, "mostCommon")
+            val co2 = solve(input, 0, "leastCommon")
+            
+            return Integer.parseInt(oxygen, 2) * Integer.parseInt(co2, 2)
+        }
 
-    // test if implementation meets criteria from the description for part 2, like:
-    check(part2(testInput) == 230)
+        override fun check2ExpectedResult(): Number {
+            return 230
+        }
 
-    // get the answer with the real data for part 2
-    treatPart(2, part2(input), day)
+    }.execute()
+
 }

@@ -1,65 +1,59 @@
 fun main() {
 
-    val day = 7
+    object : AoC(day = 7) {
+        override fun part1(input: List<String>): Number {
+            val sorted = input.get(0).split(',')
+                .map{ Integer.parseInt(it) }
+                .toIntArray()
+                .sorted()
 
-    fun part1(input: List<String>): Number {
-        val sorted = input.get(0).split(',')
-            .map{ Integer.parseInt(it) }
-            .toIntArray()
-            .sorted()
+            val meetingPoint =
+                if (sorted.size % 2 == 0) {
+                    (sorted[sorted.size / 2] + sorted[sorted.size / 2 - 1]) / 2
+                } else {
+                    sorted[sorted.size / 2]
+                }
 
-        val meetingPoint =
-        if (sorted.size % 2 == 0) {
-            (sorted[sorted.size / 2] + sorted[sorted.size / 2 - 1]) / 2
-        } else {
-            sorted[sorted.size / 2]
+
+            val sum = sorted.stream()
+                .mapToInt { it }
+                .map { Math.abs(it - meetingPoint) }
+                .sum()
+
+            return sum
         }
 
-
-        val sum = sorted.stream()
-            .mapToInt { it }
-            .map { Math.abs(it - meetingPoint) }
-            .sum()
-
-        return sum
-    }
-
-    fun part2(input: List<String>): Number {
-        val positions = input.get(0).split(',').map { Integer.parseInt(it) }.toIntArray()
-        val min = positions.minOrNull() ?: 0
-        val max = positions.maxOrNull() ?: 0
-
-        var answer = Int.MAX_VALUE
-
-        for (otherPosition in min..max) {
-            var newAnswer = 0
-            for (position in positions) {
-                val distance = Math.abs(otherPosition - position)
-                val fuelCost = (distance * (distance + 1)) / 2
-                newAnswer += fuelCost
-            }
-
-            if (newAnswer < answer) {
-                answer = newAnswer
-            }
+        override fun check1ExpectedResult(): Number {
+            return 37
         }
 
-        return answer
-    }
+        override fun part2(input: List<String>): Number {
+            val positions = input.get(0).split(',').map { Integer.parseInt(it) }.toIntArray()
+            val min = positions.minOrNull() ?: 0
+            val max = positions.maxOrNull() ?: 0
 
-    // test if implementation meets criteria from the description for part 1, like:
-    val testInput = readInput(String.format("Day%02d_test", day))
-    check(part1(testInput) == 37)
+            var answer = Int.MAX_VALUE
 
-    // test was ok retrieve the real data
-    val input = readInput(String.format("Day%02d", day))
+            for (otherPosition in min..max) {
+                var newAnswer = 0
+                for (position in positions) {
+                    val distance = Math.abs(otherPosition - position)
+                    val fuelCost = (distance * (distance + 1)) / 2
+                    newAnswer += fuelCost
+                }
 
-    // get the answer with the real data for part 1
-    treatPart(1, part1(input), day)
+                if (newAnswer < answer) {
+                    answer = newAnswer
+                }
+            }
 
-    // test if implementation meets criteria from the description for part 2, like:
-    check(part2(testInput) == 168)
+            return answer
+        }
 
-    // get the answer with the real data for part 2
-    treatPart(2, part2(input), day)
+        override fun check2ExpectedResult(): Number {
+            return 168
+        }
+
+    }.execute()
+
 }
