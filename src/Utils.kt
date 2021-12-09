@@ -11,7 +11,7 @@ import java.nio.file.StandardOpenOption
 import java.security.MessageDigest
 
 fun main() {
-    getInput(9)
+    getInput(10)
 }
 
 fun prepareRequest(inputUrl: String): HttpRequest.Builder {
@@ -25,7 +25,7 @@ fun send(request: HttpRequest): HttpResponse<String> {
         .send(request, HttpResponse.BodyHandlers.ofString())
 }
 
-fun treatPart(part: Int, answer: Int, day: Int) {
+fun treatPart(part: Int, answer: Number, day: Int) {
     print("Submit part $part result $answer? (y|n): ")
     if (readLine() == "y") {
         sendAnswer(day, part, answer)
@@ -44,7 +44,7 @@ fun getInput(day: Int) {
     Files.write(path, response.body().toByteArray(StandardCharsets.UTF_8), StandardOpenOption.CREATE, StandardOpenOption.WRITE)
 }
 
-fun sendAnswer(day: Int, level: Int, answer: Int) {
+fun sendAnswer(day: Int, level: Int, answer: Number) {
     val answerUrl = "https://adventofcode.com/$YEAR/day/$day/answer"
 
     val request = prepareRequest(answerUrl)

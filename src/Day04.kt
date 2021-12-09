@@ -48,7 +48,7 @@ fun main() {
         return boards
     }
 
-    fun part1(input: List<String>): Int {
+    fun part1(input: List<String>): Number {
         val numbers = input[0].split(',').stream().mapToInt { Integer.parseInt(it) }.toArray()
         val boards = createBoards(input.subList(2, input.size))
 
@@ -64,7 +64,7 @@ fun main() {
         return 0
     }
 
-    fun part2(input: List<String>): Int {
+    fun part2(input: List<String>): Number {
         val numbers = input[0].split(',').stream().mapToInt { Integer.parseInt(it) }.toArray()
         val boards = createBoards(input.subList(2, input.size))
 

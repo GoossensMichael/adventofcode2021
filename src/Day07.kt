@@ -2,7 +2,7 @@ fun main() {
 
     val day = 7
 
-    fun part1(input: List<String>): Int {
+    fun part1(input: List<String>): Number {
         val sorted = input.get(0).split(',')
             .map{ Integer.parseInt(it) }
             .toIntArray()
@@ -24,7 +24,7 @@ fun main() {
         return sum
     }
 
-    fun part2(input: List<String>): Int {
+    fun part2(input: List<String>): Number {
         val positions = input.get(0).split(',').map { Integer.parseInt(it) }.toIntArray()
         val min = positions.minOrNull() ?: 0
         val max = positions.maxOrNull() ?: 0
@@ -47,13 +47,6 @@ fun main() {
         return answer
     }
 
-    fun treatPart(part: Int, answer: Int) {
-        print("Submit part $part result $answer? (y|n): ")
-        if (readLine() == "y") {
-            sendAnswer(day, part, answer)
-        }
-    }
-
     // test if implementation meets criteria from the description for part 1, like:
     val testInput = readInput(String.format("Day%02d_test", day))
     check(part1(testInput) == 37)
@@ -62,11 +55,11 @@ fun main() {
     val input = readInput(String.format("Day%02d", day))
 
     // get the answer with the real data for part 1
-    treatPart(1, part1(input))
+    treatPart(1, part1(input), day)
 
     // test if implementation meets criteria from the description for part 2, like:
     check(part2(testInput) == 168)
 
     // get the answer with the real data for part 2
-    treatPart(2, part2(input))
+    treatPart(2, part2(input), day)
 }

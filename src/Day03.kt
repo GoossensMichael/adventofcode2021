@@ -4,7 +4,7 @@ fun main() {
 
     val day = 3
 
-    fun part1(input: List<String>): Int {
+    fun part1(input: List<String>): Number {
 
         var gammaBits = ""
         var epsilonBits = ""
@@ -48,7 +48,7 @@ fun main() {
         return if (check) solve(high, position + 1, type) else solve(low, position + 1, type)
     }
 
-    fun part2(input: List<String>): Int {
+    fun part2(input: List<String>): Number {
         val oxygen = solve(input, 0, "mostCommon")
         val co2 = solve(input, 0, "leastCommon")
 

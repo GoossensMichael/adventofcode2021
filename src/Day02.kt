@@ -4,7 +4,7 @@ fun main() {
 
     val day = 2
 
-    fun part1(input: List<String>): Int {
+    fun part1(input: List<String>): Number {
         var x = 0
         var y = 0
         input.stream()
@@ -22,7 +22,7 @@ fun main() {
         return x * y
     }
 
-    fun part2(input: List<String>): Int {
+    fun part2(input: List<String>): Number {
         var x = 0
         var y = 0
         var aim = 0

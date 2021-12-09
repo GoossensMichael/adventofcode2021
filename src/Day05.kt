@@ -50,13 +50,13 @@ fun main() {
         return oceanFloor
     }
 
-    fun part1(input: List<String>): Int {
+    fun part1(input: List<String>): Number {
         val oceanFloor = mapOceanFloor(input)
 
         return oceanFloor.values.filter { it > 1 }.count()
     }
 
-    fun part2(input: List<String>): Int {
+    fun part2(input: List<String>): Number {
         val oceanFloor = mapOceanFloor(input, true)
 
         return oceanFloor.values.filter { it > 1 }.count()
