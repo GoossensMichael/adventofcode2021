@@ -113,7 +113,7 @@ data class Basin(val coordinates: MutableSet<Pair<Int, Int>> = mutableSetOf()) {
             }
     }
 
-    fun canReach(source: Pair<Int, Int>, target: Pair<Int, Int>, heights: Array<IntArray>): Boolean {
+    private fun canReach(source: Pair<Int, Int>, target: Pair<Int, Int>, heights: Array<IntArray>): Boolean {
         return heights[source.first][target.second] != 9 || heights[target.first][source.second] != 9
     }
 

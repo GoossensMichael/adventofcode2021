@@ -52,7 +52,7 @@ fun main() {
         override fun part1(input: List<String>): Number {
             val oceanFloor = mapOceanFloor(input)
 
-            return oceanFloor.values.filter { it > 1 }.count()
+            return oceanFloor.values.count { it > 1 }
         }
 
         override fun check1ExpectedResult(): Number {
@@ -62,7 +62,7 @@ fun main() {
         override fun part2(input: List<String>): Number {
             val oceanFloor = mapOceanFloor(input, true)
 
-            return oceanFloor.values.filter { it > 1 }.count()
+            return oceanFloor.values.count { it > 1 }
         }
 
         override fun check2ExpectedResult(): Number {

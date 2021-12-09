@@ -4,16 +4,14 @@ fun main() {
 
     object : AoC(day = 8) {
         override fun part1(input: List<String>): Number {
-            val sum = input.stream()
+            return input.stream()
                 .map { it.split(" | ") }
                 .map { it[1] }
-                .map { it.split(' ').groupBy { it.length } }
+                .map { it.split(' ').groupBy { i -> i.length } }
                 .flatMap { it.entries.stream() }
                 .filter { it.key == 2 || it.key == 4 || it.key == 3 || it.key == 7 }
                 .mapToInt { it.value.size }
                 .sum()
-
-            return sum
         }
 
         override fun check1ExpectedResult(): Number {
@@ -37,20 +35,20 @@ fun main() {
             val codes = input.first
             val numbers = mutableMapOf<String, String>()
 
-            val one = codes.get(2)!!.get(0)
-            val four = codes.get(4)!!.get(0)
-            val seven = codes.get(3)!!.get(0)
-            val eight = codes.get(7)!!.get(0)
+            val one = codes[2]!![0]
+            val four = codes[4]!![0]
+            val seven = codes[3]!![0]
+            val eight = codes[7]!![0]
 
-            val grp235 = codes.get(5)!!
-            val three = minus(grp235, one).get(3)!!.stream().findFirst().orElseThrow().first
-            val two = minus(grp235, four).get(3)!!.stream().findFirst().orElseThrow().first
-            val five = minus(grp235, two).get(2)!!.stream().findFirst().orElseThrow().first
+            val grp235 = codes[5]!!
+            val three = minus(grp235, one)[3]!!.stream().findFirst().orElseThrow().first
+            val two = minus(grp235, four)[3]!!.stream().findFirst().orElseThrow().first
+            val five = minus(grp235, two)[2]!!.stream().findFirst().orElseThrow().first
 
-            val grp069 = codes.get(6)!!
-            val six = minus(grp069, one).get(5)!!.stream().findFirst().orElseThrow().first
-            val nine = minus(grp069, four).get(2)!!.stream().findFirst().orElseThrow().first
-            val zero = minus(grp069, five).get(2)!!.stream().findFirst().orElseThrow().first
+            val grp069 = codes[6]!!
+            val six = minus(grp069, one)[5]!!.stream().findFirst().orElseThrow().first
+            val nine = minus(grp069, four)[2]!!.stream().findFirst().orElseThrow().first
+            val zero = minus(grp069, five)[2]!!.stream().findFirst().orElseThrow().first
 
             numbers[zero] = "0"
             numbers[one] = "1"
@@ -70,12 +68,12 @@ fun main() {
             return Integer.parseInt(result)
         }
 
-        fun part2_1(input: List<String>): Number {
+        fun part2Pragmatic(input: List<String>): Number {
             return input.stream()
                 .map { it.split(" | ") }
                 .map { Pair(
-                    it[0].split(' ').map { it.toCharArray().sorted().joinToString("") }.groupBy { it.length },
-                    it[1].split(' ').map { it.toCharArray().sorted().joinToString("") })
+                    it[0].split(' ').map { i -> i.toCharArray().sorted().joinToString("") }.groupBy { i -> i.length },
+                    it[1].split(' ').map { i -> i.toCharArray().sorted().joinToString("") })
                 }
                 .mapToInt { solve2(it) }
                 .sum()
@@ -105,7 +103,7 @@ fun main() {
                     val wiring = split[0]
                     val output = split[1]
 
-                    val inputSegmentCount = wiring.replace(" ", "").toList().groupingBy { it }.eachCount()
+                    val inputSegmentCount = wiring.replace(" ", "").toList().groupingBy { i -> i }.eachCount()
 
                     var result = ""
                     for (digit in output.split(' ')) {

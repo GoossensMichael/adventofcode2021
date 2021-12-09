@@ -4,14 +4,14 @@ fun main() {
         val FULL_CYCLE = 9
 
         private fun solve(input: List<String>, days: Int): Number {
-            var population = Array(FULL_CYCLE) { i -> 0L }
+            var population = Array(FULL_CYCLE) { 0L }
 
-            input.get(0).split(',')
+            input[0].split(',')
                 .map { Integer.parseInt(it) }
                 .forEach { population[it]++ }
 
             repeat(days) {
-                val newPopulation = Array(FULL_CYCLE) { i -> 0L }
+                val newPopulation = Array(FULL_CYCLE) { 0L }
 
                 for (period in 1 until FULL_CYCLE) {
                     newPopulation[period - 1] += population[period]

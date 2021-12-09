@@ -1,8 +1,10 @@
+import kotlin.math.abs
+
 fun main() {
 
     object : AoC(day = 7) {
         override fun part1(input: List<String>): Number {
-            val sorted = input.get(0).split(',')
+            val sorted = input[0].split(',')
                 .map{ Integer.parseInt(it) }
                 .toIntArray()
                 .sorted()
@@ -15,12 +17,9 @@ fun main() {
                 }
 
 
-            val sum = sorted.stream()
-                .mapToInt { it }
-                .map { Math.abs(it - meetingPoint) }
+            return sorted.asSequence()
+                .map { abs(it - meetingPoint) }
                 .sum()
-
-            return sum
         }
 
         override fun check1ExpectedResult(): Number {
@@ -28,7 +27,7 @@ fun main() {
         }
 
         override fun part2(input: List<String>): Number {
-            val positions = input.get(0).split(',').map { Integer.parseInt(it) }.toIntArray()
+            val positions = input[0].split(',').map { Integer.parseInt(it) }.toIntArray()
             val min = positions.minOrNull() ?: 0
             val max = positions.maxOrNull() ?: 0
 
@@ -37,7 +36,7 @@ fun main() {
             for (otherPosition in min..max) {
                 var newAnswer = 0
                 for (position in positions) {
-                    val distance = Math.abs(otherPosition - position)
+                    val distance = abs(otherPosition - position)
                     val fuelCost = (distance * (distance + 1)) / 2
                     newAnswer += fuelCost
                 }
