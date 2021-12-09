@@ -52,6 +52,7 @@ fun main() {
                 .anyMatch {
                     val x = abs(it.first - coordinate.first)
                     val y = abs(it.second - coordinate.second)
+                    // manhattan distance is 1 and path is not blocked by a 9
                     x + y == 1 && canReach(coordinate, it, heights)
                 }
         }
