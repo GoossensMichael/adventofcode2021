@@ -11,7 +11,7 @@ import java.nio.file.StandardOpenOption
 import java.security.MessageDigest
 
 fun main() {
-    getInput(12)
+    getInput(13)
 }
 
 fun prepareRequest(inputUrl: String): HttpRequest.Builder {
@@ -23,13 +23,6 @@ fun prepareRequest(inputUrl: String): HttpRequest.Builder {
 fun send(request: HttpRequest): HttpResponse<String> {
     return HttpClient.newBuilder().build()
         .send(request, HttpResponse.BodyHandlers.ofString())
-}
-
-fun treatPart(part: Int, answer: Number, day: Int) {
-    print("Submit part $part result $answer? (y|n): ")
-    if (readLine() == "y") {
-        sendAnswer(day, part, answer)
-    }
 }
 
 fun getInput(day: Int) {
@@ -68,6 +61,13 @@ fun readInput(name: String): List<String> {
 fun String.md5(): String = BigInteger(1, MessageDigest.getInstance("MD5").digest(toByteArray())).toString(16)
 
 abstract class AoC(val day: Int) {
+
+    open fun treatPart(part: Int, answer: Number, day: Int) {
+        print("Submit part $part result $answer? (y|n): ")
+        if (readLine() == "y") {
+            sendAnswer(day, part, answer)
+        }
+    }
 
     fun execute() {
         // test if implementation meets criteria from the description for part 1, like:
