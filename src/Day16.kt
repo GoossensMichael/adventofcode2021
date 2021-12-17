@@ -89,7 +89,7 @@ fun main() {
                     packet.length = data.substring(7..17).toInt(2)
 
                     var bitsRead = 0
-                    while (packet.packets.size < packet.length!!) {
+                    repeat(packet.length!!) {
                         val result = processPackets(data.substring(18 + bitsRead))
                         bitsRead += result.bits!!
                         packet.packets.add(result)
