@@ -11,7 +11,7 @@ import java.nio.file.StandardOpenOption
 import java.security.MessageDigest
 
 fun main() {
-    getInput(16)
+    getInput(17)
 }
 
 fun prepareRequest(inputUrl: String): HttpRequest.Builder {
