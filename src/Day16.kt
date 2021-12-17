@@ -33,19 +33,16 @@ fun main() {
         }
 
         fun solve(): Long {
-            return if (literal != null) {
-                literal!!
-            } else {
-                when (typeId.toInt(2)) {
-                    0 -> packets.sumOf { it.solve() }
-                    1 -> packets.map { it.solve() }.reduce { a, b -> a * b }
-                    2 -> packets.minOf { it.solve() }
-                    3 -> packets.maxOf { it.solve() }
-                    5 -> if (packets[0].solve() > packets[1].solve()) 1 else 0
-                    6 -> if (packets[0].solve() < packets[1].solve()) 1 else 0
-                    7 -> if (packets[0].solve() == packets[1].solve()) 1 else 0
-                    else -> error("Type id $typeId can not be solved")
-                }
+            return when (typeId.toInt(2)) {
+                0 -> packets.sumOf { it.solve() }
+                1 -> packets.map { it.solve() }.reduce { a, b -> a * b }
+                2 -> packets.minOf { it.solve() }
+                3 -> packets.maxOf { it.solve() }
+                4 -> literal!!
+                5 -> if (packets[0].solve() > packets[1].solve()) 1 else 0
+                6 -> if (packets[0].solve() < packets[1].solve()) 1 else 0
+                7 -> if (packets[0].solve() == packets[1].solve()) 1 else 0
+                else -> error("Type id $typeId can not be solved")
             }
         }
     }
