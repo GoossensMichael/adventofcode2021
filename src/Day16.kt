@@ -1,5 +1,3 @@
-import java.util.*
-
 fun main() {
 
     val hexMap = mapOf(
@@ -35,12 +33,12 @@ fun main() {
         }
 
         fun solve(): Long {
-            if (literal != null) {
-                return literal!!
+            return if (literal != null) {
+                literal!!
             } else {
-                return when (typeId.toInt(2)) {
-                    0 -> packets.map { it.solve() }.sum()
-                    1 -> packets.map { it.solve() }.fold(1L) { a, b -> a * b }
+                when (typeId.toInt(2)) {
+                    0 -> packets.sumOf { it.solve() }
+                    1 -> packets.map { it.solve() }.reduce { a, b -> a * b }
                     2 -> packets.minOf { it.solve() }
                     3 -> packets.maxOf { it.solve() }
                     5 -> if (packets[0].solve() > packets[1].solve()) 1 else 0
@@ -111,10 +109,25 @@ fun main() {
         }
 
         override fun check1ExpectedResult(): Number {
+            /*
+             * test = 16
+             * test 2 = 12
+             * test 3 = 23
+             * test 4 = 31
+             */
             return 16
         }
 
+        override fun part2(input: List<String>): Number {
+            return processPackets(input.parse()).solve()
+        }
+
         /*
+         * test = 15L
+         * test 2 = ?
+         * test 3 = ?
+         * test 4 = ?
+         *
          * Extra test data:
          * C200B40A82 finds the sum of 1 and 2, resulting in the value 3.
          * 04005AC33890 finds the product of 6 and 9, resulting in the value 54.
@@ -125,10 +138,6 @@ fun main() {
          * 9C005AC2F8F0 produces 0, because 5 is not equal to 15.
          * 9C0141080250320F1802104A08 produces 1, because 1 + 3 = 2 * 2.
          */
-        override fun part2(input: List<String>): Number {
-            return processPackets(input.parse()).solve()
-        }
-
         override fun check2ExpectedResult(): Number {
             return 15L
         }
