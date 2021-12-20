@@ -11,7 +11,7 @@ import java.nio.file.StandardOpenOption
 import java.security.MessageDigest
 
 fun main() {
-    getInput(19)
+    getInput(20)
 }
 
 fun prepareRequest(inputUrl: String): HttpRequest.Builder {
@@ -83,7 +83,7 @@ abstract class AoC(val day: Int) {
     fun execute() {
         // test if implementation meets criteria from the description for part 1, like:
         val testInput = readInput(String.format("Day%02d_test", day))
-        //check(part1(testInput) == check1ExpectedResult())
+        check(part1(testInput) == check1ExpectedResult())
 
         // test was ok retrieve the real data
         val input = readInput(String.format("Day%02d", day))
