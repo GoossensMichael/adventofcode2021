@@ -17,17 +17,8 @@ fun main() {
 
     }
 
-    val quantumDiePermutations = listOf(
-        3L, 4L, 5L,
-        4L, 5L, 6L,
-        5L, 6L, 7L,
-        4L, 5L, 6L,
-        5L, 6L, 7L,
-        6L, 7L, 8L,
-        5L, 6L, 7L,
-        6L, 7L, 8L,
-        7L, 8L, 9L,
-    )
+    val quantumDiePermutations = mapOf(Pair(3L, 1L), Pair(4L, 3L), Pair(5L, 6L),
+                                        Pair(6L, 7L), Pair(7L, 6L), Pair(8L, 3L), Pair(9L, 1L))
 
     object : AoC(day = 21) {
 
@@ -81,16 +72,16 @@ fun main() {
             }
 
             var state = Pair(0L, 0L)
-            for (i in quantumDiePermutations) {
+            for (p in quantumDiePermutations) {
                 val childState = play2(
                     DiracDiceUniverse(
-                        if (universe.turn == 1) evaluatePlayer(universe.playerOne, i) else universe.playerOne,
-                        if (universe.turn == 2) evaluatePlayer(universe.playerTwo, i) else universe.playerTwo,
+                        if (universe.turn == 1) evaluatePlayer(universe.playerOne, p.key) else universe.playerOne,
+                        if (universe.turn == 2) evaluatePlayer(universe.playerTwo, p.key) else universe.playerTwo,
                         if (universe.turn == 1) 2 else 1
                     ),
                     universes
                 )
-                state = Pair(state.first + childState.first, state.second + childState.second)
+                state = Pair(state.first + (childState.first * p.value), state.second + (childState.second * p.value))
             }
             universes[universe] = state
 
