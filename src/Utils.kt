@@ -11,7 +11,7 @@ import java.nio.file.StandardOpenOption
 import java.security.MessageDigest
 
 fun main() {
-    getInput(21)
+    getInput(22)
 }
 
 fun prepareRequest(inputUrl: String): HttpRequest.Builder {
@@ -42,9 +42,9 @@ fun sendAnswer(day: Int, level: Int, answer: Number) {
 
     val request = prepareRequest(answerUrl)
         .POST(HttpRequest.BodyPublishers.ofString("level=$level,answer=$answer"))
-        .build();
+        .build()
 
-    val response = send(request);
+    val response = send(request)
     println(response.body())
 }
 
