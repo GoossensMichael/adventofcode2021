@@ -8,7 +8,6 @@ fun main() {
             val cols = input[0].length
 
             var cucumbers = input.map { it.toCharArray() }.toTypedArray()
-            print(cucumbers)
 
             var moved = true
             var count = 0
@@ -46,22 +45,10 @@ fun main() {
                     }
                 }
 
-                println()
-                println(count)
-                print(newCucumbers)
                 cucumbers = newCucumbers
             }
 
             return count
-        }
-
-        private fun print(cucumbers: Array<CharArray>) {
-            for (row in cucumbers) {
-                for (col in row) {
-                    print(col)
-                }
-                println()
-            }
         }
 
         override fun check1ExpectedResult(): Number {
